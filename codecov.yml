@@ -1,0 +1,23 @@
+codecov:
+  require_ci_to_pass: false
+  notify:
+    after_n_builds: 1
+
+coverage:
+  status:
+    project: true
+    patch: true
+  precision: 2
+  round: down
+  range: 60..100
+
+# Help Codecov resolve any absolute path variants and support module TS extensions.
+fixes:
+  # Map potential absolute workspace path to repository root (safety net)
+  - '/home/runner/work/ts-fortress/ts-fortress/::'
+
+ignore:
+  - 'dist/**'
+  - 'coverage/**'
+  - '**/*.test.mts'
+  - '**/index.mts'
