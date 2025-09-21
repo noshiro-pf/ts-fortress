@@ -57,7 +57,7 @@ export const uuidV7 = (defaultValue?: string): Type<Uuid7> =>
 type UuidValidatorOption<V extends UuidVersion | UuidVersionAdditionalOption> =
   Readonly<{
     /**
-     * @param version One of 1-8, 'nil', 'max', 'all' or 'loose'. The 'loose' option checks if the string is a UUID-like string with hexadecimal values, ignoring RFC9565.
+     * @param version One of 1-8, 'nil', 'max', 'all' or 'loose'. The 'loose' option checks if the string is a UUID-like string with hexadecimal values, ignoring RFC9562.
      */
     version?: V;
 
