@@ -1,10 +1,10 @@
 import { expectType } from 'ts-data-forge';
 import { array } from '../array/index.mjs';
+import { union } from '../compose/index.mjs';
 import { boolean, nullType, number, string } from '../primitives/index.mjs';
 import { keyValueRecord, record } from '../record/index.mjs';
 import { type Type, type TypeOf } from '../type.mjs';
 import { recursion } from './recursion.mjs';
-import { union } from './union.mjs';
 
 describe('recursive', () => {
   // Define JsonPrimitive type

@@ -2,9 +2,9 @@
 
 ---
 
-[ts-fortress](../README.md) / compose/recursion
+[ts-fortress](../README.md) / other-types/recursion
 
-# compose/recursion
+# other-types/recursion
 
 ## Functions
 
@@ -12,7 +12,7 @@
 
 > **recursion**\<`A`\>(`typeName`, `definition`, `options?`): [`Type`](../type/README.md#type)\<`A`\>
 
-Defined in: [src/compose/recursion.mts:4](https://github.com/noshiro-pf/ts-fortress/blob/main/src/compose/recursion.mts#L4)
+Defined in: [src/other-types/recursion.mts:4](https://github.com/noshiro-pf/ts-fortress/blob/main/src/other-types/recursion.mts#L4)
 
 #### Type Parameters
 

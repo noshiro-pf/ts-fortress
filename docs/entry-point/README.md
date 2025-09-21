@@ -10246,7 +10246,7 @@ Re-exports [RecordType](../type/README.md#recordtype)
 
 ### recursion
 
-Re-exports [recursion](../compose/recursion.md#recursion)
+Re-exports [recursion](../other-types/recursion.md#recursion)
 
 ---
 
