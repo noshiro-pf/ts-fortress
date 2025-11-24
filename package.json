@@ -106,7 +106,7 @@
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.9",
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "volta": {
     "node": "25.0.0",
