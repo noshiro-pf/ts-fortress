@@ -113,7 +113,7 @@
     "typescript": "5.9.3",
     "vite": "7.2.6",
     "vitest": "4.0.15",
-    "zod": "4.1.13"
+    "zod": "4.2.0"
   },
   "packageManager": "pnpm@10.24.0",
   "volta": {
