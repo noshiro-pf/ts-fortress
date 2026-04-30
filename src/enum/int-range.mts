@@ -5,6 +5,15 @@ import {
   Num,
   Result,
 } from 'ts-data-forge';
+import {
+  type BoolAnd,
+  type Index,
+  type IndexInclusive,
+  type Int8,
+  type NegativeIndex,
+  type TypeExtends,
+  type UintRange,
+} from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,

@@ -1,4 +1,5 @@
 import { Arr, memoizeFunction, Result } from 'ts-data-forge';
+import { type ArrayAtLeastLen, type SmallUint } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,

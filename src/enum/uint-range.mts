@@ -1,4 +1,5 @@
 import { isNumber, memoizeFunction, Num, Result } from 'ts-data-forge';
+import { type Uint8, type UintRange } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,

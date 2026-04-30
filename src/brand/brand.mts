@@ -1,4 +1,5 @@
 import { pipe, Result } from 'ts-data-forge';
+import { type Brand, type Primitive, type StrictExtract } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import { createType, type ValidationError } from '../utils/index.mjs';
 
