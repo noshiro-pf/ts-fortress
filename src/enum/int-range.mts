@@ -83,7 +83,7 @@ type NegativeRange = NegativeIndex<128>;
 
 type PositiveRange = IndexInclusive<128>;
 
-type IntRange<Start extends Int8, End extends Int8 | 128> =
+export type IntRange<Start extends Int8, End extends Int8 | 128> =
   BoolAnd<
     TypeExtends<Start, PositiveRange>,
     TypeExtends<End, PositiveRange>

@@ -10,6 +10,8 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
+export type { NonEmptyArray } from 'ts-type-forge';
+
 export const nonEmptyArray = <A,>(
   elementType: Type<A>,
   options?: Partial<

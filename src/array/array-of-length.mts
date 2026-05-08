@@ -10,6 +10,8 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
+export type { ArrayOfLength } from 'ts-type-forge';
+
 export const arrayOfLength = <A, N extends SmallUint>(
   size: N,
   elementType: Type<A>,

@@ -9,6 +9,8 @@ import {
   type TypeOf,
 } from '../type.mjs';
 
+export type { ValueOf } from 'ts-type-forge';
+
 export const valueof = <const R extends UnknownRecord>(
   recordType: Type<R>,
   options?: Partial<

@@ -8,6 +8,8 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
+export type { UintRange } from 'ts-type-forge';
+
 export const uintRange = <
   Start extends Uint8,
   End extends Exclude<Uint8 | 256, Start>,

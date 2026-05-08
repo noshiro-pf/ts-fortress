@@ -10,6 +10,8 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
+export type { ArrayAtLeastLen } from 'ts-type-forge';
+
 export const arrayAtLeastLength = <A, N extends SmallUint>(
   size: N,
   elementType: Type<A>,

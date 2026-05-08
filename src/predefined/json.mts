@@ -1,7 +1,7 @@
 import { expectType } from 'ts-data-forge';
 import {
-  type JsonPrimitive as JsonPrimitiveT,
-  type JsonValue as JsonValueT,
+  type JsonPrimitive as JsonPrimitive_,
+  type JsonValue as JsonValue_,
   type ReadonlyRecord,
 } from 'ts-type-forge';
 import { array } from '../array/index.mjs';
@@ -11,30 +11,34 @@ import { boolean, nullType, number, string } from '../primitives/index.mjs';
 import { keyValueRecord } from '../record/index.mjs';
 import { type Type, type TypeOf } from '../type.mjs';
 
+export type JsonPrimitive = JsonPrimitive_;
+
 export const JsonPrimitive = union([nullType, number(), string(), boolean()]);
 
 if (import.meta.vitest !== undefined) {
   test('JsonPrimitive', () => {
-    expectType<TypeOf<typeof JsonPrimitive>, JsonPrimitiveT>('=');
+    expectType<TypeOf<typeof JsonPrimitive>, JsonPrimitive>('=');
 
-    expectType<JsonPrimitiveT, null | boolean | number | string>('=');
+    expectType<JsonPrimitive, null | boolean | number | string>('=');
 
     expect(JsonPrimitive.defaultValue).toBeNull();
   });
 }
 
-export const JsonValue: Type<JsonValueT> = recursion('JsonValue', () =>
+export type JsonValue = JsonValue_;
+
+export const JsonValue: Type<JsonValue> = recursion('JsonValue', () =>
   union([JsonPrimitive, keyValueRecord(string(), JsonValue), array(JsonValue)]),
 );
 
 if (import.meta.vitest !== undefined) {
   test('JsonValue', () => {
-    expectType<TypeOf<typeof JsonValue>, JsonValueT>('=');
+    expectType<TypeOf<typeof JsonValue>, JsonValue>('=');
 
     expect(JsonValue.defaultValue).toBeNull();
   });
 }
 
-type JsonObject = ReadonlyRecord<string, JsonValueT>;
+export type JsonObject = ReadonlyRecord<string, JsonValue>;
 
 export const JsonObject = keyValueRecord(string(), JsonValue);

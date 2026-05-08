@@ -3,6 +3,8 @@ import { type Brand, type Primitive, type StrictExtract } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import { createType, type ValidationError } from '../utils/index.mjs';
 
+export type { Brand } from 'ts-type-forge';
+
 type ArrayToUnion<A extends readonly unknown[]> = A extends readonly []
   ? never
   : A[number];
