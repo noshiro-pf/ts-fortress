@@ -81,6 +81,14 @@ export type RecordTypeInternals = Readonly<{
   excessProperty: ExcessPropertyOption;
 }>;
 
+/**
+ * @internal Internal properties attached to tuple types so that the element
+ * type at a given index can be recovered (e.g. by {@link at}).
+ */
+export type TupleTypeInternals = Readonly<{
+  elementTypes: readonly Type<unknown>[];
+}>;
+
 /** @internal Helper to flatten ShapeStructure to a simple shape if possible */
 export const flattenShapeStructure = (
   structure: ShapeStructure,
@@ -104,6 +112,36 @@ export const flattenShapeStructure = (
     case 'union': {
       // Union cannot be flattened to a single shape
       return undefined;
+    }
+  }
+};
+
+/**
+ * @internal Expands a ShapeStructure into all possible simple shapes.
+ * For union structures, returns an array of all variant shapes.
+ * For intersection structures, computes the cartesian product of all parts.
+ *
+ * Unlike {@link flattenShapeStructure}, this never returns `undefined`: a
+ * union of records is represented as the list of its concrete member shapes.
+ */
+export const expandShapeStructure = (
+  structure: ShapeStructure,
+): readonly UnknownShape[] => {
+  switch (structure.kind) {
+    case 'simple': {
+      return [structure.shape];
+    }
+    case 'union': {
+      // Union: flatten all variants
+      return structure.variants.flatMap(expandShapeStructure);
+    }
+    case 'intersection': {
+      // Intersection: compute cartesian product of all parts
+      const expandedParts = structure.parts.map(expandShapeStructure);
+
+      const combinations = Arr.cartesianProduct(expandedParts);
+
+      return Arr.map(combinations, (shapes) => Obj.merge(...shapes));
     }
   }
 };
@@ -132,6 +170,14 @@ const hasRecordInternalsImpl = (t: unknown): t is RecordTypeInternals =>
   isValidShapeStructure(t.shapeStructure) &&
   hasKey(t, 'excessProperty') &&
   (t.excessProperty === 'allow' || t.excessProperty === 'reject');
+
+/** @internal Runtime check for tuple type internals. */
+export const hasTupleInternals = <T extends Type<unknown>>(
+  t: T,
+): t is T & TupleTypeInternals => hasTupleInternalsImpl(t);
+
+const hasTupleInternalsImpl = (t: unknown): t is TupleTypeInternals =>
+  isRecord(t) && hasKey(t, 'elementTypes') && Arr.isArray(t.elementTypes);
 
 const isValidShapeStructure = (s: unknown): s is ShapeStructure => {
   if (!isRecord(s) || !hasKey(s, 'kind')) return false;
