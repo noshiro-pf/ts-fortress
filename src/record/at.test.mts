@@ -3,7 +3,12 @@ import { array, tuple } from '../array/index.mjs';
 import { union } from '../compose/index.mjs';
 import { literal, recursion } from '../other-types/index.mjs';
 import { boolean, nullType, number, string } from '../primitives/index.mjs';
-import { type Type, type TypeOf } from '../type.mjs';
+import {
+  expandShapeStructure,
+  type ShapeStructure,
+  type Type,
+  type TypeOf,
+} from '../type.mjs';
 import { at } from './at.mjs';
 import { mergeRecords } from './merge-records.mjs';
 import { optional } from './optional.mjs';
@@ -245,6 +250,46 @@ describe(at, () => {
         // @ts-expect-error number() is not a record type
         at(number(), 'x');
       }).toThrow('Expected a record type');
+    });
+  });
+
+  // `at` expands the full shape structure to resolve a key. Intersecting unions
+  // multiplies the variant counts, so the underlying `expandShapeStructure`
+  // guards against exponential blow-up.
+  describe('variant-count guard', () => {
+    const simple: ShapeStructure = {
+      kind: 'simple',
+      shape: { k: number() },
+    } as const;
+
+    test('throws when an intersection would expand to too many variants', () => {
+      const unionOf7: ShapeStructure = {
+        kind: 'union',
+        variants: [simple, simple, simple, simple, simple, simple, simple],
+      } as const;
+
+      // 7^5 = 16807 > 10_000
+      const nested: ShapeStructure = {
+        kind: 'intersection',
+        parts: [unionOf7, unionOf7, unionOf7, unionOf7, unionOf7],
+      } as const;
+
+      expect(() => expandShapeStructure(nested)).toThrow('exceeding the limit');
+    });
+
+    test('does not throw for a moderate intersection', () => {
+      const unionOf3: ShapeStructure = {
+        kind: 'union',
+        variants: [simple, simple, simple],
+      } as const;
+
+      // 3^2 = 9 <= 10_000
+      const moderate: ShapeStructure = {
+        kind: 'intersection',
+        parts: [unionOf3, unionOf3],
+      } as const;
+
+      expect(expandShapeStructure(moderate)).toHaveLength(9);
     });
   });
 });

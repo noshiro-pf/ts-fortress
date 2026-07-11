@@ -117,12 +117,24 @@ export const flattenShapeStructure = (
 };
 
 /**
+ * @internal Upper bound on the number of concrete shapes that
+ * {@link expandShapeStructure} may produce. Expanding an intersection of unions
+ * multiplies the variant counts, so a deeply nested structure can grow
+ * exponentially; this bound prevents excessive CPU/memory usage (mirrors the
+ * guard in `mergeRecords`).
+ */
+const EXPAND_SHAPE_STRUCTURE_MAX_VARIANTS = 10_000;
+
+/**
  * @internal Expands a ShapeStructure into all possible simple shapes.
  * For union structures, returns an array of all variant shapes.
  * For intersection structures, computes the cartesian product of all parts.
  *
  * Unlike {@link flattenShapeStructure}, this never returns `undefined`: a
  * union of records is represented as the list of its concrete member shapes.
+ *
+ * @throws If the intersection expansion would exceed
+ *   {@link EXPAND_SHAPE_STRUCTURE_MAX_VARIANTS} concrete shapes.
  */
 export const expandShapeStructure = (
   structure: ShapeStructure,
@@ -138,6 +150,20 @@ export const expandShapeStructure = (
     case 'intersection': {
       // Intersection: compute cartesian product of all parts
       const expandedParts = structure.parts.map(expandShapeStructure);
+
+      // The cartesian product size is the product of the per-part variant
+      // counts, which grows multiplicatively. Bound it before materializing to
+      // avoid excessive CPU/memory usage.
+      const estimatedVariantCount = expandedParts.reduce(
+        (acc, shapes) => acc * shapes.length,
+        1,
+      );
+
+      if (estimatedVariantCount > EXPAND_SHAPE_STRUCTURE_MAX_VARIANTS) {
+        throw new Error(
+          `Expanding this record type would create ${estimatedVariantCount} variants, exceeding the limit of ${EXPAND_SHAPE_STRUCTURE_MAX_VARIANTS}. This could lead to excessive memory or CPU usage. Consider simplifying the record types or reducing union/intersection nesting.`,
+        );
+      }
 
       const combinations = Arr.cartesianProduct(expandedParts);
 
