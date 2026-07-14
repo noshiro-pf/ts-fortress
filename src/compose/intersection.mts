@@ -194,7 +194,7 @@ namespace TsFortressInternal {
         ? readonly [TypeOf<Cast1<Head>>, ...UnwrapTypeImpl<Tail>]
         : never;
 
-  type Cast1<T> = [T] extends [Type<unknown>] ? T : never;
+  type Cast1<T> = [T] extends [AnyType] ? T : never;
 }
 
 expectType<
