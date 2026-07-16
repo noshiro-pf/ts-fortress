@@ -12,7 +12,7 @@ import {
 
 export type { MinLengthTuple } from 'ts-type-forge';
 
-export function arrayAtLeastLength<A, N extends SmallUint>(
+export function minLengthTuple<A, N extends SmallUint>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
@@ -25,7 +25,7 @@ export function arrayAtLeastLength<A, N extends SmallUint>(
 
 // For sizes outside `SmallUint` the exact length cannot be encoded in the type,
 // so the result length is left unconstrained (`readonly A[]`).
-export function arrayAtLeastLength<A>(
+export function minLengthTuple<A>(
   size: number,
   elementType: Type<A>,
   options?: Partial<
@@ -36,7 +36,7 @@ export function arrayAtLeastLength<A>(
   >,
 ): Type<readonly A[]>;
 
-export function arrayAtLeastLength<A>(
+export function minLengthTuple<A>(
   size: number,
   elementType: Type<A>,
   options?: Partial<

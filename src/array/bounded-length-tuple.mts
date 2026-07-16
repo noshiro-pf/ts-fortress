@@ -17,7 +17,7 @@ import {
 
 export type { BoundedLengthTuple } from 'ts-type-forge';
 
-export function arrayBoundedLength<
+export function boundedLengthTuple<
   A,
   Min extends SmallUint,
   Max extends SmallUint,
@@ -35,7 +35,7 @@ export function arrayBoundedLength<
 
 // Only the lower bound is in `SmallUint`, so the upper bound is dropped from the
 // result type and only the "at least `min`" guarantee is kept.
-export function arrayBoundedLength<A, Min extends SmallUint>(
+export function boundedLengthTuple<A, Min extends SmallUint>(
   min: Min,
   max: number,
   elementType: Type<A>,
@@ -49,7 +49,7 @@ export function arrayBoundedLength<A, Min extends SmallUint>(
 
 // Only the upper bound is in `SmallUint`, so the lower bound is dropped from the
 // result type and only the "at most `max`" guarantee is kept.
-export function arrayBoundedLength<A, Max extends SmallUint>(
+export function boundedLengthTuple<A, Max extends SmallUint>(
   min: number,
   max: Max,
   elementType: Type<A>,
@@ -62,7 +62,7 @@ export function arrayBoundedLength<A, Max extends SmallUint>(
 ): Type<MaxLengthTuple<Max, A>>;
 
 // Neither bound is in `SmallUint`, so the result length is left unconstrained.
-export function arrayBoundedLength<A>(
+export function boundedLengthTuple<A>(
   min: number,
   max: number,
   elementType: Type<A>,
@@ -74,7 +74,7 @@ export function arrayBoundedLength<A>(
   >,
 ): Type<readonly A[]>;
 
-export function arrayBoundedLength<A>(
+export function boundedLengthTuple<A>(
   min: number,
   max: number,
   elementType: Type<A>,

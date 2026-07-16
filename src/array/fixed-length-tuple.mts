@@ -12,7 +12,7 @@ import {
 
 export type { FixedLengthTuple } from 'ts-type-forge';
 
-export const arrayOfLength = <A, N extends SmallUint>(
+export const fixedLengthTuple = <A, N extends SmallUint>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
@@ -46,7 +46,7 @@ export const arrayOfLength = <A, N extends SmallUint>(
       ]);
     }
 
-    if (!Arr.isArrayOfLength(a, size)) {
+    if (!Arr.isFixedLengthTuple(a, size)) {
       return Result.err([
         {
           path: [],

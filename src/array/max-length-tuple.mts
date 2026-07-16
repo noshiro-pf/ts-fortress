@@ -12,7 +12,7 @@ import {
 
 export type { MaxLengthTuple } from 'ts-type-forge';
 
-export function arrayAtMostLength<A, N extends SmallUint>(
+export function maxLengthTuple<A, N extends SmallUint>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
@@ -25,7 +25,7 @@ export function arrayAtMostLength<A, N extends SmallUint>(
 
 // For sizes outside `SmallUint` the exact length cannot be encoded in the type,
 // so the result length is left unconstrained (`readonly A[]`).
-export function arrayAtMostLength<A>(
+export function maxLengthTuple<A>(
   size: number,
   elementType: Type<A>,
   options?: Partial<
@@ -36,7 +36,7 @@ export function arrayAtMostLength<A>(
   >,
 ): Type<readonly A[]>;
 
-export function arrayAtMostLength<A>(
+export function maxLengthTuple<A>(
   size: number,
   elementType: Type<A>,
   options?: Partial<

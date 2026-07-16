@@ -26,12 +26,12 @@ export type {
 /**
  * Creates a `Type` for a readonly array with exactly `size` elements, typed as
  * the branded {@link FixedLengthArray} instead of the structural tuple type
- * produced by `arrayOfLength`.
+ * produced by `fixedLengthTuple`.
  *
  * Because the length constraint lives only in the brand, the element type is
  * never expanded into tuple positions, which keeps type-checking cheap even
- * when `A` is a large type. Prefer this over `arrayOfLength` when `A` is
- * large; prefer `arrayOfLength` when positional element types or a literal
+ * when `A` is a large type. Prefer this over `fixedLengthTuple` when `A` is
+ * large; prefer `fixedLengthTuple` when positional element types or a literal
  * `length` are needed.
  */
 export function fixedLengthArray<A, N extends SmallUint>(
@@ -124,7 +124,7 @@ export function fixedLengthArray<A>(
 /**
  * Creates a `Type` for a readonly array with at least `minLength` elements,
  * typed as the branded {@link MinLengthArray} instead of the structural
- * `readonly [A, ..., A, ...A[]]` type produced by `arrayAtLeastLength`.
+ * `readonly [A, ..., A, ...A[]]` type produced by `minLengthTuple`.
  *
  * Because the length constraint lives only in the brand, the element type is
  * never expanded into tuple positions, which keeps type-checking cheap even
@@ -228,7 +228,7 @@ export function minLengthArray<A>(
 /**
  * Creates a `Type` for a readonly array with at most `maxLength` elements,
  * typed as the branded {@link MaxLengthArray} instead of the union of tuple
- * types produced by `arrayAtMostLength`.
+ * types produced by `maxLengthTuple`.
  *
  * Because the length constraint lives only in the brand, no union of tuples
  * of the element type is ever constructed, which keeps type-checking cheap
@@ -327,7 +327,7 @@ export function maxLengthArray<A>(
 /**
  * Creates a `Type` for a readonly array whose length is within the inclusive
  * range `[min, max]`, typed as the branded {@link BoundedLengthArray} instead
- * of the union of tuple types produced by `arrayBoundedLength`.
+ * of the union of tuple types produced by `boundedLengthTuple`.
  *
  * Because the length constraint lives only in the brand, no union of tuples
  * of the element type is ever constructed, which keeps type-checking cheap

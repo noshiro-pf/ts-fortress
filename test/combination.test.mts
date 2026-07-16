@@ -2,9 +2,9 @@ import { asInt, expectType, Result } from 'ts-data-forge';
 import { type Int, type UnknownRecord } from 'ts-type-forge';
 import {
   array,
-  arrayOfLength,
   brandedString,
   enumType,
+  fixedLengthTuple,
   int,
   intersection,
   intRange,
@@ -280,7 +280,7 @@ describe('advanced type', () => {
     intRange({ start: -128, end: 128, defaultValue: 0 }),
   ]);
 
-  const paletteBase = arrayOfLength(2, EvenRange);
+  const paletteBase = fixedLengthTuple(2, EvenRange);
 
   const Palette = intersection(
     [nonEmptyArray(EvenRange), paletteBase],

@@ -6,27 +6,27 @@ import {
   type ValidationError,
   validationErrorsToMessages,
 } from '../utils/index.mjs';
-import { arrayOfLength } from './array-of-length.mjs';
+import { fixedLengthTuple } from './fixed-length-tuple.mjs';
 
-describe(arrayOfLength, () => {
+describe(fixedLengthTuple, () => {
   describe('arg patterns', () => {
     test('without explicit default value', () => {
       assert.deepStrictEqual(
-        arrayOfLength(3, number()).defaultValue,
+        fixedLengthTuple(3, number()).defaultValue,
         [0, 0, 0],
       );
     });
 
     test('with explicit default value, case 1', () => {
       assert.deepStrictEqual(
-        arrayOfLength(3, number(2)).defaultValue,
+        fixedLengthTuple(3, number(2)).defaultValue,
         [2, 2, 2],
       );
     });
 
     test('with explicit default value, case 2', () => {
       assert.deepStrictEqual(
-        arrayOfLength(4, number(), {
+        fixedLengthTuple(4, number(), {
           typeName: 'xs',
           defaultValue: [1, 2, 3, 4],
         }).defaultValue,
@@ -35,7 +35,7 @@ describe(arrayOfLength, () => {
     });
   });
 
-  const xs = arrayOfLength(4, number(), {
+  const xs = fixedLengthTuple(4, number(), {
     typeName: 'xs',
     defaultValue: [1, 2, 3, 4],
   });
