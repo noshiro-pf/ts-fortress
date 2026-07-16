@@ -1,5 +1,5 @@
 import { expectType, Result } from 'ts-data-forge';
-import { type ArrayOfLength } from 'ts-type-forge';
+import { type FixedLengthTuple } from 'ts-type-forge';
 import { number } from '../primitives/index.mjs';
 import { type TypeOf } from '../type.mjs';
 import {
@@ -42,7 +42,7 @@ describe(arrayOfLength, () => {
 
   type Xs = TypeOf<typeof xs>;
 
-  expectType<Xs, ArrayOfLength<4, number>>('=');
+  expectType<Xs, FixedLengthTuple<4, number>>('=');
 
   expectType<typeof xs.defaultValue, Xs>('=');
 

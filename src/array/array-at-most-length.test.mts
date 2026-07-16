@@ -1,5 +1,5 @@
 import { expectType, Result } from 'ts-data-forge';
-import { type ArrayAtMostLen } from 'ts-type-forge';
+import { type MaxLengthTuple } from 'ts-type-forge';
 import { number } from '../primitives/index.mjs';
 import { type TypeOf } from '../type.mjs';
 import {
@@ -32,7 +32,7 @@ describe(arrayAtMostLength, () => {
 
   type Xs = TypeOf<typeof xs>;
 
-  expectType<Xs, ArrayAtMostLen<3, number>>('=');
+  expectType<Xs, MaxLengthTuple<3, number>>('=');
 
   expectType<typeof xs.defaultValue, Xs>('=');
 

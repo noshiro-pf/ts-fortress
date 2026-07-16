@@ -1,8 +1,8 @@
 import { expectType, Result } from 'ts-data-forge';
 import {
-  type ArrayAtLeastLen,
-  type ArrayAtMostLen,
-  type ArrayBoundedLen,
+  type BoundedLengthTuple,
+  type MaxLengthTuple,
+  type MinLengthTuple,
 } from 'ts-type-forge';
 import { number } from '../primitives/index.mjs';
 import { type TypeOf } from '../type.mjs';
@@ -46,7 +46,7 @@ describe(arrayBoundedLength, () => {
 
   type Xs = TypeOf<typeof xs>;
 
-  expectType<Xs, ArrayBoundedLen<2, 4, number>>('=');
+  expectType<Xs, BoundedLengthTuple<2, 4, number>>('=');
 
   expectType<typeof xs.defaultValue, Xs>('=');
 
@@ -259,15 +259,15 @@ describe(arrayBoundedLength, () => {
     // bound from the result type.
     const dynamic: number = 3;
 
-    // min ∈ SmallUint & max ∉ SmallUint -> ArrayAtLeastLen<min, A>
+    // min ∈ SmallUint & max ∉ SmallUint -> MinLengthTuple<min, A>
     const atLeast = arrayBoundedLength(2, dynamic, number());
 
-    expectType<TypeOf<typeof atLeast>, ArrayAtLeastLen<2, number>>('=');
+    expectType<TypeOf<typeof atLeast>, MinLengthTuple<2, number>>('=');
 
-    // min ∉ SmallUint & max ∈ SmallUint -> ArrayAtMostLen<max, A>
+    // min ∉ SmallUint & max ∈ SmallUint -> MaxLengthTuple<max, A>
     const atMost = arrayBoundedLength(dynamic, 5, number());
 
-    expectType<TypeOf<typeof atMost>, ArrayAtMostLen<5, number>>('=');
+    expectType<TypeOf<typeof atMost>, MaxLengthTuple<5, number>>('=');
 
     // min ∉ SmallUint & max ∉ SmallUint -> readonly A[]
     const unbounded = arrayBoundedLength(dynamic, dynamic, number());

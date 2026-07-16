@@ -1,8 +1,8 @@
 import { Arr, asUint32, memoizeFunction, Result } from 'ts-data-forge';
 import {
-  type ArrayAtLeastLen,
-  type ArrayAtMostLen,
-  type ArrayBoundedLen,
+  type BoundedLengthTuple,
+  type MaxLengthTuple,
+  type MinLengthTuple,
   type SmallUint,
 } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
@@ -15,7 +15,7 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
-export type { ArrayBoundedLen } from 'ts-type-forge';
+export type { BoundedLengthTuple } from 'ts-type-forge';
 
 export function arrayBoundedLength<
   A,
@@ -28,10 +28,10 @@ export function arrayBoundedLength<
   options?: Partial<
     Readonly<{
       typeName: string;
-      defaultValue: ArrayBoundedLen<Min, Max, A>;
+      defaultValue: BoundedLengthTuple<Min, Max, A>;
     }>
   >,
-): Type<ArrayBoundedLen<Min, Max, A>>;
+): Type<BoundedLengthTuple<Min, Max, A>>;
 
 // Only the lower bound is in `SmallUint`, so the upper bound is dropped from the
 // result type and only the "at least `min`" guarantee is kept.
@@ -42,10 +42,10 @@ export function arrayBoundedLength<A, Min extends SmallUint>(
   options?: Partial<
     Readonly<{
       typeName: string;
-      defaultValue: ArrayAtLeastLen<Min, A>;
+      defaultValue: MinLengthTuple<Min, A>;
     }>
   >,
-): Type<ArrayAtLeastLen<Min, A>>;
+): Type<MinLengthTuple<Min, A>>;
 
 // Only the upper bound is in `SmallUint`, so the lower bound is dropped from the
 // result type and only the "at most `max`" guarantee is kept.
@@ -56,10 +56,10 @@ export function arrayBoundedLength<A, Max extends SmallUint>(
   options?: Partial<
     Readonly<{
       typeName: string;
-      defaultValue: ArrayAtMostLen<Max, A>;
+      defaultValue: MaxLengthTuple<Max, A>;
     }>
   >,
-): Type<ArrayAtMostLen<Max, A>>;
+): Type<MaxLengthTuple<Max, A>>;
 
 // Neither bound is in `SmallUint`, so the result length is left unconstrained.
 export function arrayBoundedLength<A>(
@@ -89,7 +89,7 @@ export function arrayBoundedLength<A>(
 
   const typeName =
     options?.typeName ??
-    `ArrayBoundedLen<${min}, ${max}, ${elementType.typeName}>`;
+    `BoundedLengthTuple<${min}, ${max}, ${elementType.typeName}>`;
 
   const getDefaultValue = memoizeFunction(
     (): T =>

@@ -1,5 +1,5 @@
 import { Arr, asUint32, memoizeFunction, Result } from 'ts-data-forge';
-import { type ArrayAtMostLen, type SmallUint } from 'ts-type-forge';
+import { type MaxLengthTuple, type SmallUint } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,
@@ -10,7 +10,7 @@ import {
   type ValidationError,
 } from '../utils/index.mjs';
 
-export type { ArrayAtMostLen } from 'ts-type-forge';
+export type { MaxLengthTuple } from 'ts-type-forge';
 
 export function arrayAtMostLength<A, N extends SmallUint>(
   size: N,
@@ -18,10 +18,10 @@ export function arrayAtMostLength<A, N extends SmallUint>(
   options?: Partial<
     Readonly<{
       typeName: string;
-      defaultValue: ArrayAtMostLen<N, A>;
+      defaultValue: MaxLengthTuple<N, A>;
     }>
   >,
-): Type<ArrayAtMostLen<N, A>>;
+): Type<MaxLengthTuple<N, A>>;
 
 // For sizes outside `SmallUint` the exact length cannot be encoded in the type,
 // so the result length is left unconstrained (`readonly A[]`).
@@ -49,7 +49,7 @@ export function arrayAtMostLength<A>(
   type T = readonly A[];
 
   const typeName =
-    options?.typeName ?? `ArrayAtMostLen<${size}, ${elementType.typeName}>`;
+    options?.typeName ?? `MaxLengthTuple<${size}, ${elementType.typeName}>`;
 
   const getDefaultValue = memoizeFunction(
     (): T =>

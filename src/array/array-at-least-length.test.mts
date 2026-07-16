@@ -1,5 +1,5 @@
 import { expectType, Result } from 'ts-data-forge';
-import { type ArrayAtLeastLen } from 'ts-type-forge';
+import { type MinLengthTuple } from 'ts-type-forge';
 import { number } from '../primitives/index.mjs';
 import { type TypeOf } from '../type.mjs';
 import {
@@ -42,7 +42,7 @@ describe(arrayAtLeastLength, () => {
 
   type Xs = TypeOf<typeof xs>;
 
-  expectType<Xs, ArrayAtLeastLen<3, number>>('=');
+  expectType<Xs, MinLengthTuple<3, number>>('=');
 
   expectType<typeof xs.defaultValue, Xs>('=');
 
