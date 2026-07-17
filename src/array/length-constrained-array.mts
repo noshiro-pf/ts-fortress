@@ -4,7 +4,7 @@ import {
   type FixedLengthArray,
   type MaxLengthArray,
   type MinLengthArray,
-  type SmallUint,
+  type SupportedLength,
 } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
@@ -34,7 +34,7 @@ export type {
  * large; prefer `fixedLengthTuple` when positional element types or a literal
  * `length` are needed.
  */
-export function fixedLengthArray<A, N extends SmallUint>(
+export function fixedLengthArray<A, N extends SupportedLength>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
@@ -45,7 +45,7 @@ export function fixedLengthArray<A, N extends SmallUint>(
   >,
 ): Type<FixedLengthArray<N, A>>;
 
-// For sizes outside `SmallUint` the length cannot be encoded in the brand,
+// For sizes outside `SupportedLength` (`0..2048`) the length cannot be encoded in the brand,
 // so the result length is left unconstrained (`readonly A[]`).
 export function fixedLengthArray<A>(
   size: number,
@@ -130,7 +130,7 @@ export function fixedLengthArray<A>(
  * never expanded into tuple positions, which keeps type-checking cheap even
  * when `A` is a large type.
  */
-export function minLengthArray<A, N extends SmallUint>(
+export function minLengthArray<A, N extends SupportedLength>(
   minLength: N,
   elementType: Type<A>,
   options?: Partial<
@@ -141,7 +141,7 @@ export function minLengthArray<A, N extends SmallUint>(
   >,
 ): Type<MinLengthArray<N, A>>;
 
-// For bounds outside `SmallUint` the length cannot be encoded in the brand,
+// For bounds outside `SupportedLength` (`0..2048`) the length cannot be encoded in the brand,
 // so the result length is left unconstrained (`readonly A[]`).
 export function minLengthArray<A>(
   minLength: number,
@@ -234,7 +234,7 @@ export function minLengthArray<A>(
  * of the element type is ever constructed, which keeps type-checking cheap
  * even when `A` is a large type.
  */
-export function maxLengthArray<A, N extends SmallUint>(
+export function maxLengthArray<A, N extends SupportedLength>(
   maxLength: N,
   elementType: Type<A>,
   options?: Partial<
@@ -245,7 +245,7 @@ export function maxLengthArray<A, N extends SmallUint>(
   >,
 ): Type<MaxLengthArray<N, A>>;
 
-// For bounds outside `SmallUint` the length cannot be encoded in the brand,
+// For bounds outside `SupportedLength` (`0..2048`) the length cannot be encoded in the brand,
 // so the result length is left unconstrained (`readonly A[]`).
 export function maxLengthArray<A>(
   maxLength: number,
@@ -335,8 +335,8 @@ export function maxLengthArray<A>(
  */
 export function boundedLengthArray<
   A,
-  Min extends SmallUint,
-  Max extends SmallUint,
+  Min extends SupportedLength,
+  Max extends SupportedLength,
 >(
   min: Min,
   max: Max,
@@ -349,9 +349,9 @@ export function boundedLengthArray<
   >,
 ): Type<BoundedLengthArray<Min, Max, A>>;
 
-// Only the lower bound is in `SmallUint`, so the upper bound is dropped from
+// Only the lower bound is in `SupportedLength`, so the upper bound is dropped from
 // the result type and only the "at least `min`" guarantee is kept.
-export function boundedLengthArray<A, Min extends SmallUint>(
+export function boundedLengthArray<A, Min extends SupportedLength>(
   min: Min,
   max: number,
   elementType: Type<A>,
@@ -363,9 +363,9 @@ export function boundedLengthArray<A, Min extends SmallUint>(
   >,
 ): Type<MinLengthArray<Min, A>>;
 
-// Only the upper bound is in `SmallUint`, so the lower bound is dropped from
+// Only the upper bound is in `SupportedLength`, so the lower bound is dropped from
 // the result type and only the "at most `max`" guarantee is kept.
-export function boundedLengthArray<A, Max extends SmallUint>(
+export function boundedLengthArray<A, Max extends SupportedLength>(
   min: number,
   max: Max,
   elementType: Type<A>,
@@ -377,7 +377,7 @@ export function boundedLengthArray<A, Max extends SmallUint>(
   >,
 ): Type<MaxLengthArray<Max, A>>;
 
-// Neither bound is in `SmallUint`, so the result length is left unconstrained.
+// Neither bound is in `SupportedLength`, so the result length is left unconstrained.
 export function boundedLengthArray<A>(
   min: number,
   max: number,
