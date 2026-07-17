@@ -3,7 +3,7 @@ import {
   type BoundedLengthTuple,
   type MaxLengthTuple,
   type MinLengthTuple,
-  type SmallUint,
+  type StructuralPrefixLength,
 } from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
@@ -19,8 +19,8 @@ export type { BoundedLengthTuple } from 'ts-type-forge';
 
 export function boundedLengthTuple<
   A,
-  Min extends SmallUint,
-  Max extends SmallUint,
+  Min extends StructuralPrefixLength,
+  Max extends StructuralPrefixLength,
 >(
   min: Min,
   max: Max,
@@ -33,9 +33,9 @@ export function boundedLengthTuple<
   >,
 ): Type<BoundedLengthTuple<Min, Max, A>>;
 
-// Only the lower bound is in `SmallUint`, so the upper bound is dropped from the
+// Only the lower bound is in `StructuralPrefixLength` (`0..10`), so the upper bound is dropped from the
 // result type and only the "at least `min`" guarantee is kept.
-export function boundedLengthTuple<A, Min extends SmallUint>(
+export function boundedLengthTuple<A, Min extends StructuralPrefixLength>(
   min: Min,
   max: number,
   elementType: Type<A>,
@@ -47,9 +47,9 @@ export function boundedLengthTuple<A, Min extends SmallUint>(
   >,
 ): Type<MinLengthTuple<Min, A>>;
 
-// Only the upper bound is in `SmallUint`, so the lower bound is dropped from the
+// Only the upper bound is in `StructuralPrefixLength` (`0..10`), so the lower bound is dropped from the
 // result type and only the "at most `max`" guarantee is kept.
-export function boundedLengthTuple<A, Max extends SmallUint>(
+export function boundedLengthTuple<A, Max extends StructuralPrefixLength>(
   min: number,
   max: Max,
   elementType: Type<A>,
@@ -61,7 +61,7 @@ export function boundedLengthTuple<A, Max extends SmallUint>(
   >,
 ): Type<MaxLengthTuple<Max, A>>;
 
-// Neither bound is in `SmallUint`, so the result length is left unconstrained.
+// Neither bound is in `StructuralPrefixLength` (`0..10`), so the result length is left unconstrained.
 export function boundedLengthTuple<A>(
   min: number,
   max: number,

@@ -204,8 +204,8 @@ describe(maxLengthTuple, () => {
     });
   });
 
-  describe('size outside SmallUint', () => {
-    // A literal beyond `SmallUint`'s range selects the fallback overload, whose
+  describe('size outside StructuralPrefixLength', () => {
+    // A literal beyond `StructuralPrefixLength`'s range selects the fallback overload, whose
     // result length is unconstrained.
     const big = maxLengthTuple(100, number());
 

@@ -254,22 +254,22 @@ describe(boundedLengthTuple, () => {
     });
   });
 
-  describe('bounds outside SmallUint', () => {
-    // A plain `number` is outside `SmallUint`, so it drops the corresponding
+  describe('bounds outside StructuralPrefixLength', () => {
+    // A plain `number` is outside `StructuralPrefixLength`, so it drops the corresponding
     // bound from the result type.
     const dynamic: number = 3;
 
-    // min ∈ SmallUint & max ∉ SmallUint -> MinLengthTuple<min, A>
+    // min ∈ StructuralPrefixLength & max ∉ StructuralPrefixLength -> MinLengthTuple<min, A>
     const atLeast = boundedLengthTuple(2, dynamic, number());
 
     expectType<TypeOf<typeof atLeast>, MinLengthTuple<2, number>>('=');
 
-    // min ∉ SmallUint & max ∈ SmallUint -> MaxLengthTuple<max, A>
+    // min ∉ StructuralPrefixLength & max ∈ StructuralPrefixLength -> MaxLengthTuple<max, A>
     const atMost = boundedLengthTuple(dynamic, 5, number());
 
     expectType<TypeOf<typeof atMost>, MaxLengthTuple<5, number>>('=');
 
-    // min ∉ SmallUint & max ∉ SmallUint -> readonly A[]
+    // min ∉ StructuralPrefixLength & max ∉ StructuralPrefixLength -> readonly A[]
     const unbounded = boundedLengthTuple(dynamic, dynamic, number());
 
     expectType<TypeOf<typeof unbounded>, readonly number[]>('=');

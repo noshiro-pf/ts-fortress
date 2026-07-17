@@ -1,5 +1,8 @@
 import { Arr, asUint32, memoizeFunction, Result } from 'ts-data-forge';
-import { type MaxLengthTuple, type SmallUint } from 'ts-type-forge';
+import {
+  type MaxLengthTuple,
+  type StructuralPrefixLength,
+} from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,
@@ -12,7 +15,7 @@ import {
 
 export type { MaxLengthTuple } from 'ts-type-forge';
 
-export function maxLengthTuple<A, N extends SmallUint>(
+export function maxLengthTuple<A, N extends StructuralPrefixLength>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
@@ -23,7 +26,7 @@ export function maxLengthTuple<A, N extends SmallUint>(
   >,
 ): Type<MaxLengthTuple<N, A>>;
 
-// For sizes outside `SmallUint` the exact length cannot be encoded in the type,
+// For sizes outside `StructuralPrefixLength` (`0..10`) the exact length cannot be encoded in the type,
 // so the result length is left unconstrained (`readonly A[]`).
 export function maxLengthTuple<A>(
   size: number,

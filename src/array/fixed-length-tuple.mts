@@ -1,5 +1,8 @@
 import { Arr, memoizeFunction, Result } from 'ts-data-forge';
-import { type FixedLengthTuple, type SmallUint } from 'ts-type-forge';
+import {
+  type FixedLengthTuple,
+  type StructuralPrefixLength,
+} from 'ts-type-forge';
 import { type Type } from '../type.mjs';
 import {
   createAssertFn,
@@ -12,7 +15,7 @@ import {
 
 export type { FixedLengthTuple } from 'ts-type-forge';
 
-export const fixedLengthTuple = <A, N extends SmallUint>(
+export const fixedLengthTuple = <A, N extends StructuralPrefixLength>(
   size: N,
   elementType: Type<A>,
   options?: Partial<
