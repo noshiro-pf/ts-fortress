@@ -468,7 +468,7 @@ export function boundedLengthArray<A>(
 const validateElements = <A,>(
   a: readonly unknown[],
   elementType: Type<A>,
-): ReturnType<Type<readonly A[]>['validate']> => {
+): Result<readonly A[], readonly ValidationError[]> => {
   const errors: readonly ValidationError[] = Arr.generate(function* () {
     for (const [index, el] of a.entries()) {
       const res = elementType.validate(el);
@@ -496,18 +496,19 @@ const buildType = <A,>({
 }: Readonly<{
   typeName: string;
   getDefaultValue: () => readonly A[];
-  validate: Type<readonly A[]>['validate'];
-  fill: Type<readonly A[]>['fill'];
+  validate: (a: unknown) => Result<readonly A[], readonly ValidationError[]>;
+  fill: (a: unknown) => readonly A[];
   elementType: Type<A>;
-}>): Type<readonly A[]> => ({
-  typeName,
-  get defaultValue() {
-    return getDefaultValue();
-  },
-  fill,
-  prune: (a) => a.map((el) => elementType.prune(el)),
-  validate,
-  is: createIsFn(validate),
-  cast: createCastFn(validate),
-  assertIs: createAssertFn(validate),
-});
+}>): Type<readonly A[]> =>
+  ({
+    typeName,
+    get defaultValue() {
+      return getDefaultValue();
+    },
+    fill,
+    prune: (a) => a.map((el) => elementType.prune(el)),
+    validate,
+    is: createIsFn(validate),
+    cast: createCastFn(validate),
+    assertIs: createAssertFn(validate),
+  }) as const;

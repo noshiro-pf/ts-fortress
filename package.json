@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "@sindresorhus/is": "^8.1.0",
-    "ts-data-forge": "^9.0.0",
+    "ts-data-forge": "^10.0.0",
     "ts-type-forge": "^6.0.0"
   },
   "devDependencies": {
