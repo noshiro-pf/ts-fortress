@@ -15,8 +15,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(typescript@6.0.3)
       ts-type-forge:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^6.0.0
+        version: 6.0.0
     devDependencies:
       '@rollup/plugin-replace':
         specifier: 6.0.3
@@ -4350,6 +4350,10 @@ packages:
 
   ts-type-forge@5.0.0:
     resolution: {integrity: sha512-+7t3WkIDz5IsAhPR7r0zGhWjqccRRsbiPC2F0d3hTl911GttOACd45PLIzoHha10384qEHNGIl4yi4kTgcQM2w==}
+    engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
+
+  ts-type-forge@6.0.0:
+    resolution: {integrity: sha512-JaKup0HC8vBjnKPfDXao2NYzX1/5cB6LR5S4fCHRqqNLSNoZtH08jR/IuvjLDVg3paxyQWXm6BG1/bqgN9XEYg==}
     engines: {node: '>=22.22.2', pnpm: '>=9.0.0'}
 
   tsconfig-paths@3.15.0:
@@ -9196,6 +9200,8 @@ snapshots:
   ts-type-forge@3.2.0: {}
 
   ts-type-forge@5.0.0: {}
+
+  ts-type-forge@6.0.0: {}
 
   tsconfig-paths@3.15.0:
     dependencies:
