@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import { unknownToString } from 'ts-data-forge';
-import { isDirectlyExecuted, Result } from 'ts-repo-utils';
+import { formatFiles, isDirectlyExecuted, Result } from 'ts-repo-utils';
 import { projectRootPath } from '../project-root-path.mjs';
 
 const commonRulesPath = path.resolve(projectRootPath, 'agents/common-rules.md');
@@ -66,6 +66,12 @@ export const genAgentsMd = async (): Promise<Result<undefined, string>> => {
 
     // eslint-disable-next-line security/detect-non-literal-fs-filename
     await fs.writeFile(outputPath, output, 'utf8');
+
+    // Format the generated file with the repo's Prettier config so that the
+    // committed AGENTS.md is byte-identical to what `fmt:full` would produce
+    // (the local-rules.md source lives under the Prettier-ignored agents/,
+    // so its embedded code blocks are otherwise not normalized).
+    await formatFiles([outputPath]);
 
     console.log(
       `Successfully generated ${path.relative(projectRootPath, outputPath)}.`,
