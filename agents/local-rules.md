@@ -1,6 +1,9 @@
-# Local Project-Specific Agent Instructions
+# ts-fortress Local Rules
 
-This file contains project-specific coding guidelines and conventions that supplement the shared instructions in `common/agents/AGENTS.md`.
+Repository-specific rules for `ts-fortress` (a runtime type-validation /
+branded-type library). These supplement the shared instructions above
+(vendored into `agents/common-rules.md` from the common-agent-config
+repository).
 
 ## Validation Error Handling
 
