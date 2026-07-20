@@ -78,9 +78,6 @@ export const nonEmptyArray = <A,>(
       ? Arr.map(a, (e) => elementType.fill(e) satisfies A)
       : getDefaultValue();
 
-  // `buildType` carries the branded output type through its first two type
-  // arguments (element type, branded array type), so the branded
-  // `NonEmptyArray<A>` is returned directly without a call-site assertion.
   return buildType<A, NonEmptyArray<A>>({
     typeName,
     getDefaultValue,
