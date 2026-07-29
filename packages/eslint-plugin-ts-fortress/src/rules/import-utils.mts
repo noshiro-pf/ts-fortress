@@ -153,15 +153,15 @@ export const buildImportsFix = (
   names: readonly string[],
 ): readonly TSESLint.RuleFix[] =>
   names.length === 0
-    ? []
-    : [
+    ? ([] as const)
+    : ([
         fixer.insertTextBefore(
           program,
           names
             .map((name) => `import { ${name} } from '${TS_FORTRESS_MODULE}';\n`)
             .join(''),
         ),
-      ];
+      ] as const);
 
 const isTsFortressImportDef = (node: TSESTree.Node): boolean =>
   (node.type === AST_NODE_TYPES.ImportSpecifier ||
