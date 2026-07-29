@@ -74,7 +74,6 @@
     "@rollup/plugin-strip": "3.0.4",
     "@vitest/browser-playwright": "4.1.10",
     "@vitest/ui": "4.1.10",
-    "eslint-plugin-ts-data-forge": "0.1.6",
     "fast-glob": "3.3.3",
     "fp-ts": "2.16.11",
     "io-ts": "2.2.22",

@@ -4,6 +4,10 @@ import {
   eslintConfigForTypeScript,
   type FlatConfig,
 } from 'eslint-config-typed';
+import {
+  eslintPluginTsDataForge,
+  type EslintTsDataForgeRules,
+} from 'eslint-plugin-ts-data-forge';
 import { repositoryRootPath } from './scripts/repository-root-path.mjs';
 
 export default [
@@ -22,6 +26,27 @@ export default [
     rules: defineKnownRules({
       'import-x/no-unused-modules': 'off',
     }),
+  },
+  {
+    plugins: { 'ts-data-forge': eslintPluginTsDataForge },
+    rules: {
+      'ts-data-forge/prefer-canonical-array-slicing': 'error',
+      'ts-data-forge/prefer-arr-is-min-length-array': 'error',
+      'ts-data-forge/prefer-arr-is-max-length-array': 'error',
+      'ts-data-forge/prefer-arr-is-bounded-length-array': 'error',
+      'ts-data-forge/prefer-arr-is-fixed-length-array': 'error',
+      'ts-data-forge/prefer-arr-is-array': 'error',
+      'ts-data-forge/prefer-arr-is-non-empty': 'error',
+      'ts-data-forge/prefer-arr-sum': 'error',
+      'ts-data-forge/prefer-as-int': 'error',
+      'ts-data-forge/prefer-is-non-null-object': 'error',
+      'ts-data-forge/prefer-range-for-loop': 'error',
+      'ts-data-forge/prefer-is-record-and-has-key': 'error',
+      'ts-data-forge/prefer-num-safe-parse-int': 'error',
+      'ts-data-forge/prefer-num-safe-parse-float': 'error',
+      'ts-data-forge/no-unnecessary-type-guard': ['error', { ignore: [] }],
+      'ts-data-forge/prefer-comparison-over-nullish-guard': 'error',
+    } satisfies EslintTsDataForgeRules,
   },
 
   eslintConfigForNodeJs(['scripts/**', 'configs/**']),
