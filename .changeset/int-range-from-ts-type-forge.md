@@ -6,4 +6,9 @@
 declared locally, mirroring how `UintRange` is already handled. The exported
 type name and its semantics are unchanged.
 
-Requires `ts-type-forge` >= 7.3.0, the release that adds `IntRange`.
+Requires `ts-type-forge` 8.0.0, the release that adds `IntRange`. That release
+also constrains the bounds of the whole integer-range family (`Uint10` for
+`UintRange` / `UintRangeInclusive`, `Int10` for `IntRange` /
+`IntRangeInclusive`); `intRange()` and `uintRange()` already constrain their own
+bounds to `Int8` / `Uint8`, which sit inside the new caps, so neither function's
+signature changes.
