@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+>
+> **This repository has moved to [noshiro-pf/mono](https://github.com/noshiro-pf/mono).**
+>
+> Development continues at [`libs/ts-fortress`](https://github.com/noshiro-pf/mono/tree/main/libs/ts-fortress), [`libs/eslint-plugin-ts-fortress`](https://github.com/noshiro-pf/mono/tree/main/libs/eslint-plugin-ts-fortress).
+> The full commit history and every tag came along; releases and issues stay
+> readable here.
+
 # ts-fortress monorepo
 
 This repository is a pnpm workspace containing the `ts-fortress` schema
